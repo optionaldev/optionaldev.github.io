@@ -1,5 +1,17 @@
-.keyword{color:#FC5FA3}.builtinType{color:#D0A8FF}.otherBuiltin{color:#7FADFF}.operator{color:#FA5}.exclamation{color:#FF3217;font-weight:bold}.method{color:#5DD8FF}.constant{color:#FC6A5D}#fun{font-size:10px;padding:10px
-0 0 20px;color:yellow;opacity:0.1}.originshadow{box-shadow:-1px 1px 10px 1px #111;-webkit-box-shadow:-1px 1px 10px 1px #111}.usageshadow{box-shadow:-1px 1px 10px 1px #888;-webkit-box-shadow:-1px 1px 10px 1px #888}h1,h2{text-align:center}h1{padding:40px
+/*!
+ * Minify by http://www.MinifyWeb.com/
+ */
+pre
+a{color:#FC5FA3}pre
+b{color:#D0A8FF;font-weight:normal}pre
+i{color:#7FADFF;font-style:normal}pre
+u{color:#FA5;text-decoration:none}p
+u{color:#FA5;text-decoration:none}pre
+p{display:inline;padding:0;margin:0;border:0;color:#FF3217;font-weight:bold}pre
+s{color:#5DD8FF;text-decoration:none}pre
+q{color:#FC6A5D}pre q::before{display:none}pre q::after{display:none}pre q
+a{color:#DDD}#fun{font-size:10px;padding:10px
+0 0 20px;color:yellow;opacity:0.1}.originshadow{box-shadow:-1px 1px 10px 1px #111;-webkit-box-shadow:-1px 1px 10px 1px #111}.usageshadow{box-shadow:-1px 1px 10px 1px #666;-webkit-box-shadow:-1px 1px 10px 1px #666}h1,h2{text-align:center}h1{padding:40px
 0 0 0}h2{font-size:15px;color:#888}.source{background-color:#FAFAFA15;border-radius:5px;font-size:14px;line-height:20px;padding:10px
 0 10px 0;margin:15px
 auto 15px auto;width:870px;overflow:hidden}.line{border-right:1px solid #FFF1;color:#777;float:left;margin-right:10px;padding-right:4px;text-align:right;width:25px}pre{margin:0}p{padding:10px

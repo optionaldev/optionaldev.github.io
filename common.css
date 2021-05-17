@@ -1,7 +1,10 @@
-@font-face{font-family:firacode;src:url(FiraCode-Light.ttf)}h1,h2,p,footer{font-family:Arial}pre,.line,#fun{font-family:firacode}a{color:#DDD}a:hover{color:orange}svg:hover{display:inline;fill:rgb(220,220,220)}header{position:relative;width:1000px;left:50%;margin-left:-500px;padding:0;border:0;height:20px;padding:13px
-0 13px 0;text-align:center}#dev{color:#DDD;display:inline}#name{display:inline;height:50%;font-size:20px}#optional{color:#EEE5;display:inline;margin:1px
-auto}#links{position:absolute;top:10px;margin:0
-0 0 70%}#links
+/*!
+ * Minify by http://www.MinifyWeb.com/
+ */
+:root{background:black}@font-face{font-family:firacode;src:url('firacode.ttf') format('truetype')}h1,h2,p,footer{font-family:Arial}pre,.line,#fun{font-family:firacode}svg{width:3rem;height:3rem}svg
+*{width:100%;height:100%}svg:hover{display:inline;fill:rgb(220,220,220)}header{position:relative;width:1000px;left:50%;margin-left:-500px;padding:13px
+0 13px 0;text-align:center}#name{display:inline;height:50%;font-size:2rem}#optional{color:#EEE5;display:inline;margin:1px
+auto}#dev{color:#DDD;display:inline}#links{position:absolute;top:50%;margin:-1.5rem 0 0 70%}#links
 a{padding:0
 5px 0 0}body{margin:0;background-image:linear-gradient(to bottom right,#088,#044);width:100%;overflow-x:hidden;overflow-y:auto}#main{width:1000px;background-color:#111B;margin:auto;margin-bottom:0px;padding:0;border:0;border-top-left-radius:20px;border-top-right-radius:20px;line-height:27px;font-size:18px}h1,p,footer{color:#DDD}footer{background:#222;color:#BBB;position:relative;left:50%;width:1000px;text-align:center;padding:20px
 0 20px 0;margin-left:-500px;height:20px}@media screen and (max-width: 1000px){header,footer{width:100%;left:0;margin-left:0}#main{width:100%}footer{width:100%}}@media screen and (max-width: 880px){p{width:90%;padding:10px

@@ -1,11 +1,11 @@
 <html><head><title>OD</title><link
 rel="stylesheet" type="text/css" href="common.css"><link
-rel="stylesheet" type="text/css" href="blog.css"></head><body>
+rel="stylesheet" type="text/css" href="blog.css"><link
+rel="icon" type="image/x-icon" href="favicon.ico"></head><body>
 <header><div
-id="name">
-<a><span
-id="optional">optional</span><span
-id="dev">dev</span></a></div><div
+id="name"><div
+id="optional">optional</div><div
+id="dev">dev</div></div><div
 id="links">
 <a
 href="https://github.com/optionaldev"><svg
@@ -32,17 +32,37 @@ class="line" onselectstart="return false"><pre>
 8
 9</pre></div><div
 class="code"><pre>
-<span class="keyword">import</span> SwiftUI
+<a>import</a> SwiftUI
 
-<span class="keyword">struct</span> CustomTextField: <span class="builtinType">UIViewRepresentable</span> {
-  <span class="keyword">func</span> <span class="method">makeUIView</span>(context: <span class="builtinType">Context</span>) -&gt; <span class="builtinType">UITextField</span> {
-    <span class="keyword">return</span> <span class="builtinType">UITextField</span>()
+<a>struct</a> CustomTextField: <b>UIViewRepresentable</b> {
+  <a>func</a> <s>makeUIView</s>(context: <b>Context</b>) -&gt; <b>UITextField</b> {
+    <a>return</a> <b>UITextField</b>()
   }
   
-  <span class="keyword">func</span> <span class="method">updateUIView</span>(_ uiView: <span class="builtinType">UITextField</span>, context: <span class="builtinType">Context</span>) {}
+  <a>func</a> <s>updateUIView</s>(_ textField: <b>UITextField</b>, context: <b>Context</b>) {}
 }
-</pre></div></div><p>When implementing the UIViewRepresentable protocol, we need to provide the implementation for 2 methods. The former manages the creation and setup of our UIKit component, while the latter deals with making sure the UIKit component stays up-to-date.</p><p>Throw in a <span>CustomTextField()</span> somewhere and start using your new shiny SwiftUI view!<br>
-It isn't very useful right now since we're writing text into the void, so let's see how we can inform our counterpart of the changes.<div
+</pre></div></div><p>When implementing the UIViewRepresentable protocol, we need to provide the implementation for 2&nbsp;methods. The former manages the creation and setup of our UIKit component, while the latter deals with making sure the UIKit component stays up-to-date.</p><p>Add the following code somewhere and start using your new shiny SwiftUI&nbsp;view!</p><div
+class="source usageshadow"><div
+class="line" onselectstart="return false"><pre>
+1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div><div
+class="code"><pre>
+<a>import</a> SwiftUI
+
+<a>struct</a> ContentView: <b>View</b> {
+  <a>var</a> body: <a>some</a> <b>View</b> {
+    CustomTextField()
+      .<i>frame</i>(width: <q>150</q>, height: <q>30</q>)
+      .<i>background</i>(<b>Color</b>.<i>gray</i>)
+  }
+}</pre></div></div><p>It isn't very useful right now since we're writing text into the void, so let's see how we can inform the ContentView of our&nbsp;changes.<div
 class="source originshadow"><div
 class="line" onselectstart="return false"><pre>
 1
@@ -61,25 +81,33 @@ class="line" onselectstart="return false"><pre>
 14
 15
 16
-17</pre></div><div
+17
+18
+19
+20
+21</pre></div><div
 class="code"><pre>
-<span class="keyword">import</span> SwiftUI
+<a>import</a> SwiftUI
 
-<span class="keyword">struct</span> CustomTextField: <span class="builtinType">UIViewRepresentable</span> {
-  @<span class="builtinType">Binding</span> <span class="keyword">var</span> text: <span class="builtinType">String</span>
+<a>struct</a> CustomTextField: <b>UIViewRepresentable</b> {
+  @<b>Binding</b> <a>var</a> text: <b>String</b>
   
-  <span class="keyword">func</span> <span class="method">makeUIView</span>(context: Context) -&gt; <span class="builtinType">UITextField</span> {
-    <span class="keyword">let</span> textField = <span class="builtinType">UITextField</span>()
-    <span class="builtinType">NotificationCenter</span>.<span class="otherBuiltin">default</span>.<span class="otherBuiltin">addObserver</span>(forName: <span class="builtinType">UITextField</span>.<span class="otherBuiltin">textDidChangeNotification</span>,
-                                           object: <span class="keyword">nil</span>,
-                                           queue: .<span class="otherBuiltin">main</span>) { _ <span class="keyword">in</span>
-      text = textField.<span class="otherBuiltin">text</span> ?? <span class="constant">""</span>
+  <a>func</a> <s>makeUIView</s>(context: <b>Context</b>) -&gt; <b>UITextField</b> {
+    <a>let</a> textField = <b>UITextField</b>()
+    <b>NotificationCenter</b>.<i>default</i>.<i>addObserver</i>(forName: <b>UITextField</b>.<i>textDidChangeNotification</i>,
+                                           object: <a>nil</a>,
+                                           queue: .<i>main</i>) { _ <a>in</a>
+      text = textField.<i>text</i> <u>??</u> <q>""</q>
     }
-    <span class="keyword">return</span> textField
+    <a>return</a> textField
   }
   
-  <span class="keyword">func</span> <span class="method">updateUIView</span>(_ uiView: <span class="builtinType">UITextField</span>, context: Context) {}
-}</pre></div></div><p>The text binding will hold a reference to a value that was passed to our CustomTextField during initialization. Remember that since this is a struct, an init method is automatically generated.<p>To monitor our changes, there's 2 approaches we can take. The first one involves adding a modifier to our view and listening to changes:</p><div
+  <a>func</a> <s>updateUIView</s>(_ textField: <b>UITextField</b>, context: <b>Context</b>) {}
+  
+  <a>static</a> <a>func</a> <s>dismantleUIView</s>(_ textField: <b>UITextField</b>, coordinator: <b>Coordinator</b>) {
+    <b>NotificationCenter</b>.<i>default</i>.<i>removeObserver</i>(<a>self</a>)
+  }
+}</pre></div></div><p>The text binding will hold a reference to a value that was passed to our CustomTextField during initialization. Remember that since this is a struct, an init method is automatically&nbsp;generated.<p>Because we're adding our custom view as an observer, we also need to make sure that we perform the necessary clean-up. UIViewRepresentable protocol also supplies dismantleUIView for this purpose, which acts like a&nbsp;<span>deinit</span>.</p><p>To monitor our changes, there's 2 approaches we can take. The first one involves adding a modifier to our view and listening to&nbsp;changes:</p><div
 class="source usageshadow"><div
 class="line" onselectstart="return false"><pre>
 1
@@ -94,21 +122,24 @@ class="line" onselectstart="return false"><pre>
 10
 11
 12
-13</pre></div><div
+13
+14</pre></div><div
 class="code"><pre>
-<span class="keyword">import</span> SwiftUI
+<a>import</a> SwiftUI
 
-<span class="keyword">struct</span> ContentView: <span class="builtinType">View</span> {
-  @<span class="builtinType">State</span> <span class="keyword">private</span> <span class="keyword">var</span> text: <span class="builtinType">String</span> = <span class="constant">""</span>
+<a>struct</a> ContentView: <b>View</b> {
+  @<b>State</b> <a>private</a> <a>var</a> text: <b>String</b> = <q>""</q>
   
-  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="builtinType">View</span> {
-    CustomTextField(text: <span class="operator">$</span>text)
-      .<span class="otherBuiltin">onChange</span>(of: text) { _ <span class="keyword">in</span>
-        <span class="otherBuiltin">print</span>(text)
+  <a>var</a> body: <a>some</a> <b>View</b> {
+    CustomTextField(text: <u>$</u>text)
+      .<i>frame</i>(width: <q>150</q>, height: <q>30</q>)
+      .<i>background</i>(<b>Color</b>.<i>gray</i>)
+      .<i>onChange</i>(of: text) { _ <a>in</a>
+        <i>print</i>(<q>"onChange text = <a>\(text)</a>"</q>)
       }
-    }
   }
-}</pre></div></div><p>The second approach involves a view model that holds our text variable:</p><div
+}
+</pre></div></div><p>The second approach involves a view model that holds our text&nbsp;variable:</p><div
 class="source usageshadow"><div
 class="line" onselectstart="return false"><pre>
 1
@@ -133,27 +164,28 @@ class="line" onselectstart="return false"><pre>
 20
 21</pre></div><div
 class="code"><pre>
-<span class="keyword">import</span> SwiftUI
+<a>import</a> SwiftUI
 
-<span class="keyword">final</span> <span class="keyword">class</span> ViewModel: <span class="builtinType">ObservableObject</span> {
-  <span class="keyword">init</span>() {}
+<a>final</a> <a>class</a> ViewModel: <b>ObservableObject</b> {
+  <a>init</a>() {}
   
-  @<span class="builtinType">Published</span> <span class="keyword">var</span> text = <span class="constant">""</span> {
-    <span class="keyword">didSet</span> {
-      <span class="otherBuiltin">print</span>(text)
+  @<b>Published</b> <a>var</a> text = <q>""</q> {
+    <a>didSet</a> {
+      <i>print</i>(<q>"didSet text = <a>\(text)</a>"</q>)
     }
   }
 }
 
-<span class="keyword">struct</span> ContentView: <span class="builtinType">View</span> {
-  @<span class="builtinType">ObservedObject</span> <span class="keyword">private</span> <span class="keyword">var</span> viewModel = ViewModel()
+<a>struct</a> ContentView: <b>View</b> {
+  @<b>ObservedObject</b> <a>private</a> <a>var</a> viewModel = ViewModel()
   
-  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="builtinType">View</span> {
-    <span class="builtinType">VStack</span> {
-      CustomTextField(text: <span class="operator">$</span>viewModel.<span class="otherBuiltin">text</span>)
-    }
+  <a>var</a> body: <a>some</a> <b>View</b> {
+    CustomTextField(text: <u>$</u>viewModel.<i>text</i>)
+      .<i>frame</i>(width: <q>150</q>, height: <q>30</q>)
+      .<i>background</i>(<b>Color</b>.<i>gray</i>)
   }
-}</pre></div></div><p>Couldn't we have used didSet in the first example? We could, but we would only get some of the updates. Because of how <span>struct</span> works in tandem with <span>@State</span>, didSet isn't aware of changes that are propagated by bindings. The only time didSet would trigger is when we would change the text variable from inside some methods like onAppear, onChange, etc.</p><p>So far, we've looked over keeping the SwiftUI component up-to-date. But what about keeping the UIKit component up-to-date? Let's say we would like to have our text field text reset when the user types "ABC".</p><div
+}
+</pre></div></div><p>In both example you may have noticed the <u>$</u> sign. This is used to create a <span>Binding</span> for that value. It is similar to the idea of creating a pointer in other languages.</p><p>Couldn't we have used didSet in the first example? We could, but we would only get some of the updates. Because of how <span>struct</span> works in tandem with <span>@State</span>, didSet isn't aware of changes that are propagated by bindings. The only time didSet would trigger is when we would change the text variable from inside some methods like onAppear, onChange,&nbsp;etc.</p><p>So far, we've looked over keeping the SwiftUI component up-to-date. But what about keeping the UIKit component up-to-date? Let's say we would like to have our text field text reset when the user types&nbsp;"ABC".</p><div
 class="source usageshadow"><div
 class="line" onselectstart="return false"><pre>
 1
@@ -173,32 +205,88 @@ class="line" onselectstart="return false"><pre>
 15
 16</pre></div><div
 class="code"><pre>
-<span class="keyword">import</span> SwiftUI
+<a>import</a> SwiftUI
 
-<span class="keyword">struct</span> ContentView: <span class="builtinType">View</span> {
-  @<span class="builtinType">State</span> <span class="keyword">private</span> <span class="keyword">var</span> text = <span class="constant">""</span>
+<a>struct</a> ContentView: <b>View</b> {
+  @<b>State</b> <a>private</a> <a>var</a> text = <q>""</q>
   
-  <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="builtinType">View</span> {
-    <span class="builtinType">VStack</span> {
-      CustomTextField(text: <span class="operator">$</span>text)
-        .<span class="otherBuiltin">onChange</span>(of: text) { _ <span class="keyword">in</span>
-          <span class="keyword">if</span> text == "ABC" {
-            text = <span class="constant">""</span>
-          }
+  <a>var</a> body: <a>some</a> <b>View</b> {
+    CustomTextField(text: <u>$</u>text)
+      .<i>frame</i>(width: <q>150</q>, height: <q>30</q>)
+      .<i>background</i>(<b>Color</b>.<i>gray</i>)
+      .<i>onChange</i>(of: text) { _ <a>in</a>
+        <a>if</a> text <u>==</u> <q>"ABC"</q> {
+          text = <q>""</q>
         }
-    }
+      }
   }
 }
-</pre></div></div><p>If we try to run it as it is right now, we would notice that even though we modify the text variable, it's not reflected on screen. This is where the <span>updateUIView</span> method comes into play. We just need to make one simple change:<div
+</pre></div></div><p>If we try to run it as it is right now, we would notice that even though we type "ABC" and it should reset, that's not what happens. This is where the <span>updateUIView</span> method comes into play. We just need to make one simple change to our custom&nbsp;view:</p><div
 class="source originshadow"><div
 class="line" onselectstart="return false"><pre>
 1
 2
 3</pre></div><div
 class="code"><pre>
-<span class="keyword">func</span> <span class="method">updateUIView</span>(_ uiView: <span class="builtinType">UITextField</span>, context: <span class="builtinType">Context</span>) {
-  uiView.<span class="otherBuiltin">text</span> = text
-}</pre></div></div><p>So far so good. Now in order to make our CustomTextField capable of become and resigning first responder, the simplest approach would be to have another binding in our custom view, like so:</p><div
+<a>func</a> <s>updateUIView</s>(_ textField: <b>UITextField</b>, context: <b>Context</b>) {
+  textField.<i>text</i> = text
+}
+</pre></div></div><p>We've successfully created the two way communication! If we type "AB", once the "C" is entered, the text will&nbsp;disappear.</p><p>So far so good. Next on the list, making our CustomTextField capable of become and resigning first responder. The simplest approach would be to have another binding in our custom view, like&nbsp;so:</p><div
+class="source originshadow"><div
+class="line" onselectstart="return false"><pre>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div><div
+class="code"><pre>
+<a>import</a> SwiftUI
+
+<a>struct</a> CustomTextField: <b>UIViewRepresentable</b> {
+  
+  @<b>Binding</b> <a>var</a> text: <b>String</b>
+  @<b>Binding</b> <a>var</a> firstResponder: <b>Bool</b>
+  
+  <a>func</a> <s>makeUIView</s>(context: <b>Context</b>) -&gt; <b>UITextField</b> {
+    <a>let</a> textField = <b>UITextField</b>()
+    <b>NotificationCenter</b>.<i>default</i>.<i>addObserver</i>(forName: <b>UITextField</b>.<i>textDidChangeNotification</i>,
+                                           object: <a>nil</a>,
+                                           queue: .<i>main</i>) { _ <a>in</a>
+      text = textField.<i>text</i> <u>??</u> <q>""</q>
+    }
+    <a>return</a> textField
+  }
+  
+  <a>func</a> <s>updateUIView</s>(_ textField: <b>UITextField</b>, context: <b>Context</b>) {
+    textField.<i>text</i> = text
+    <a>if</a> firstResponder <u>&&</u> <p>!</p>textField.<i>isFirstResponder</i> {
+      textField.<i>becomeFirstResponder</i>()
+    } <a>else</a> <a>if</a> <p>!</p>firstResponder <u>&&</u> textField.<i>isFirstResponder</i> {
+      textField.<i>resignFirstResponder</i>()
+    }
+  }
+}</pre></div></div><p>Now everytime the value of firstResponder changes, the keyboard will appear / disappear based on the value. Create another State variable, this time a boolean. Give it the initial value of true and pass it on to the initializer that is giving the compile&nbsp;error.</p><p>What if we wanted to use the delegate approach instead of the NotificationCenter approach? In an ideal world, we would simply make our custom type conform to UITextFieldDelegate, but doing so requires our type to also conform to NSObjectProtocol, which only classes can&nbsp;do.</p><p>This where the concept of <span>Coordinator</span> comes into&nbsp;play:</p><div
 class="source originshadow"><div
 class="line" onselectstart="return false"><pre>
 1
@@ -227,35 +315,77 @@ class="line" onselectstart="return false"><pre>
 24
 25
 26
-27</pre></div><div
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div><div
 class="code"><pre>
-<span class="keyword">import</span> SwiftUI
+<a>import</a> SwiftUI
 
-<span class="keyword">struct</span> CustomTextField: <span class="builtinType">UIViewRepresentable</span> {
-  
-  @<span class="builtinType">Binding</span> <span class="keyword">var</span> text: <span class="builtinType">String</span>
-  @<span class="builtinType">Binding</span> <span class="keyword">var</span> firstResponder: <span class="builtinType">Bool</span>
+<a>struct</a> CustomTextField: <b>UIViewRepresentable</b> {
+  @<b>Binding</b> <a>var</a> text: <b>String</b>
+  @<b>Binding</b> <a>var</a> firstResponder: <b>Bool</b>
 
-  <span class="keyword">let</span> textField = <span class="builtinType">UITextField</span>()
-  
-  <span class="keyword">func</span> <span class="method">makeUIView</span>(context: <span class="builtinType">Context</span>) -&gt; <span class="builtinType">UITextField</span> {
-    <span class="builtinType">NotificationCenter</span>.<span class="otherBuiltin">default</span>.<span class="otherBuiltin">addObserver</span>(forName: <span class="builtinType">UITextField</span>.<span class="otherBuiltin">textDidChangeNotification</span>,
-                                           object: <span class="keyword">nil</span>,
-                                           queue: .<span class="otherBuiltin">main</span>) { _ <span class="keyword">in</span>
-      text = textField.<span class="otherBuiltin">text</span> <span class="operator">??</span> <span class="constant">""</span>
-    }
-    <span class="keyword">return</span> textField
+  <a>func</a> <s>makeUIView</s>(context: <b>Context</b>) -&gt; <b>UITextField</b> {
+    <a>let</a> textField = <b>UITextField</b>()
+    textField.<i>delegate</i> = context.<i>coordinator</i>
+    <a>return</a> textField
   }
 
-  <span class="keyword">func</span> <span class="method">updateUIView</span>(_ uiView: <span class="builtinType">UITextField</span>, context: <span class="builtinType">Context</span>) {
-    uiView.<span class="otherBuiltin">text</span> = text
-    <span class="keyword">if</span> firstResponder <span class="operator">&&</span> <span class="exclamation">!</span>textField.<span class="otherBuiltin">isFirstResponder</span> {
-      textField.<span class="otherBuiltin">becomeFirstResponder</span>()
-    } <span class="keyword">else</span> <span class="keyword">if</span> <span class="exclamation">!</span>firstResponder <span class="operator">&&</span> textField.<span class="otherBuiltin">isFirstResponder</span> {
-      textField.<span class="otherBuiltin">resignFirstResponder</span>()
+  <a>func</a> <s>updateUIView</s>(_ textField: <b>UITextField</b>, context: <b>Context</b>) {
+    textField.<i>text</i> = text
+    <a>if</a> firstResponder <u>&&</u> <p>!</p>textField.<i>isFirstResponder</i> {
+      textField.<i>becomeFirstResponder</i>()
+    } <a>else</a> <a>if</a> <p>!</p>firstResponder <u>&&</u> textField.<i>isFirstResponder</i> {
+      textField.<i>resignFirstResponder</i>()
     }
   }
-}</pre></div></div><p>Now everytime the value of firstResponder changes, the keyboard will appear or disappear based on the value. Another change you might have noticed is adding the UITextField as a property. This is necessary in order to have a reference to it that we can use to call the responder methods on.</p><p>What if we wanted to use the delegate approach instead of the NotificationCenter approach? Then, there is one more concept we need to go over, which is <span>Coordinator</span>.</p><p>Some ready to use code:</p></div>
+  
+  <a>func</a> <s>makeCoordinator</s>() -&gt; <b>Coordinator</b> {
+    <a>return</a> <b>Coordinator</b>(text: <u>$</u>text)
+  }
+  
+  <a>final</a> <a>class</a> <b>Coordinator</b>: <b>NSObject</b>, <b>UITextFieldDelegate</b> {
+    @<b>Binding</b> <a>var</a> text: <b>String</b>
+    
+    <a>init</a>(text: <b>Binding</b>&lt;<b>String</b>&gt;) {
+      <u>_</u>text = text
+    }
+    
+    <a>func</a> <s>textField</s>(_ textField: <b>UITextField</b>,
+                   shouldChangeCharactersIn range: <b>NSRange</b>,
+                   replacementString string: <b>String</b>) -&gt; <b>Bool</b> {
+      text = <b>NSString</b>(string: textField.<i>text</i> <u>??</u> <q>""</q>)
+        .<i>replacingCharacters</i>(in: range, with: string)
+      <a>return</a> <a>true</a>
+    }
+  }
+}
+</pre></div></div><p>The Coordinator is a class and therefore can conform to UITextFieldDelegate. It has the same binding as the parent struct. To reference that binding in the init method, the <span><u>_</u></span> prefix is used.</p><p>Is it done? It's done!</p><p>As a final note, even though some SwiftUI modifiers work with UIViewRepresentable views, like <span>.frame(...)</span>, <span>.background(...)</span>, <span>.padding(...)</span>, more internal ones such as <span>.font(...)</span>, <span>.foregroundColor</span> might not. My usual setup for UITextField is something&nbsp;like:</p><div
+class="source usageshadow"><div
+class="line" onselectstart="return false"><pre>
+1
+2
+3
+4</pre></div><div
+class="code"><pre>
+  textField.<i>autocapitalizationType</i> = .<i>none</i>
+  textField.<i>font</i> = .<i>systemFont</i>(ofSize: <q>20</q>)
+  textField.<i>textAlignment</i> = .<i>center</i>
+  textField.<i>textColor</i> = .<i>blue</i>
+</pre></div></div><p>Thank you for taking the time to read and all the best on your SwiftUI journey!<br><br><br><br></p>
 <footer>
 Copyright &copy; optionaldev 2021. All rights reserved.
 </footer></body></html>
+<!--Minify by http://www.MinifyWeb.com/-->
