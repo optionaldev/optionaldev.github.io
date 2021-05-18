@@ -20,7 +20,9 @@ x="0" y="0" width="16" height="16" fill="rgba(0, 0, 0, 0)" /></svg></a></div>
 </header><div
 id="main"><div
 id="fun">import Blog</div><h1>UIViewRepresentable</h1><h2>Tested with Xcode 12.3</h2><p>With each passing year, we hope for more and more UI components to be added to SwiftUI, but even though the framework has been out since the 2019 edition of WWDC, there's still a few things that we miss&nbsp;dearly.</p><p>We'll look over UITextField, a component that I find myself bringing into SwiftUI projects over and over again. The default TextField offered doesn't have the ability to become or resign first responder. Deal&nbsp;breaker&nbsp;&#128581;</p><p>Luckily, Apple has provided a way to bring a UIKit component and integrate it seamlessly into our SwiftUI code, using the UIViewRepresentable protocol, so let's dive right&nbsp;in!</p><div
-class="source originshadow"><div
+class="source originshadow">
+<button
+class="copy" onclick="copy(this,'c1')">copy</button><div
 class="line" onselectstart="return false"><pre>
 1
 2
@@ -31,7 +33,7 @@ class="line" onselectstart="return false"><pre>
 7
 8
 9</pre></div><div
-class="code"><pre>
+class="code"><pre id="c1">
 <a>import</a> SwiftUI
 
 <a>struct</a> CustomTextField: <b>UIViewRepresentable</b> {
@@ -42,7 +44,9 @@ class="code"><pre>
   <a>func</a> <s>updateUIView</s>(_ textField: <b>UITextField</b>, context: <b>Context</b>) {}
 }
 </pre></div></div><p>When implementing the UIViewRepresentable protocol, we need to provide the implementation for 2&nbsp;methods. The former manages the creation and setup of our UIKit component, while the latter deals with making sure the UIKit component stays up-to-date.</p><p>Add the following code somewhere and start using your new shiny SwiftUI&nbsp;view!</p><div
-class="source usageshadow"><div
+class="source usageshadow">
+<button
+class="copy" onclick="copy(this,'c2')">copy</button><div
 class="line" onselectstart="return false"><pre>
 1
 2
@@ -53,7 +57,7 @@ class="line" onselectstart="return false"><pre>
 7
 8
 9</pre></div><div
-class="code"><pre>
+class="code"><pre id="c2">
 <a>import</a> SwiftUI
 
 <a>struct</a> ContentView: <b>View</b> {
@@ -63,7 +67,9 @@ class="code"><pre>
       .<i>background</i>(<b>Color</b>.<i>gray</i>)
   }
 }</pre></div></div><p>It isn't very useful right now since we're writing text into the void, so let's see how we can inform the ContentView of our&nbsp;changes.<div
-class="source originshadow"><div
+class="source originshadow">
+<button
+class="copy" onclick="copy(this,'c3')">copy</button><div
 class="line" onselectstart="return false"><pre>
 1
 2
@@ -86,7 +92,7 @@ class="line" onselectstart="return false"><pre>
 19
 20
 21</pre></div><div
-class="code"><pre>
+class="code"><pre id="c3">
 <a>import</a> SwiftUI
 
 <a>struct</a> CustomTextField: <b>UIViewRepresentable</b> {
@@ -108,7 +114,9 @@ class="code"><pre>
     <b>NotificationCenter</b>.<i>default</i>.<i>removeObserver</i>(<a>self</a>)
   }
 }</pre></div></div><p>The text binding will hold a reference to a value that was passed to our CustomTextField during initialization. Remember that since this is a struct, an init method is automatically&nbsp;generated.<p>Because we're adding our custom view as an observer, we also need to make sure that we perform the necessary clean-up. UIViewRepresentable protocol also supplies dismantleUIView for this purpose, which acts like a&nbsp;<span>deinit</span>.</p><p>To monitor our changes, there's 2 approaches we can take. The first one involves adding a modifier to our view and listening to&nbsp;changes:</p><div
-class="source usageshadow"><div
+class="source usageshadow">
+<button
+class="copy" onclick="copy(this,'c4')">copy</button><div
 class="line" onselectstart="return false"><pre>
 1
 2
@@ -124,7 +132,7 @@ class="line" onselectstart="return false"><pre>
 12
 13
 14</pre></div><div
-class="code"><pre>
+class="code"><pre id="c4">
 <a>import</a> SwiftUI
 
 <a>struct</a> ContentView: <b>View</b> {
@@ -140,7 +148,9 @@ class="code"><pre>
   }
 }
 </pre></div></div><p>The second approach involves a view model that holds our text&nbsp;variable:</p><div
-class="source usageshadow"><div
+class="source usageshadow">
+<button
+class="copy" onclick="copy(this,'c5')">copy</button><div
 class="line" onselectstart="return false"><pre>
 1
 2
@@ -163,7 +173,7 @@ class="line" onselectstart="return false"><pre>
 19
 20
 21</pre></div><div
-class="code"><pre>
+class="code"><pre id="c5">
 <a>import</a> SwiftUI
 
 <a>final</a> <a>class</a> ViewModel: <b>ObservableObject</b> {
@@ -186,7 +196,9 @@ class="code"><pre>
   }
 }
 </pre></div></div><p>In both example you may have noticed the <u>$</u> sign. This is used to create a <span>Binding</span> for that value. It is similar to the idea of creating a pointer in other languages.</p><p>Couldn't we have used didSet in the first example? We could, but we would only get some of the updates. Because of how <span>struct</span> works in tandem with <span>@State</span>, didSet isn't aware of changes that are propagated by bindings. The only time didSet would trigger is when we would change the text variable from inside some methods like onAppear, onChange,&nbsp;etc.</p><p>So far, we've looked over keeping the SwiftUI component up-to-date. But what about keeping the UIKit component up-to-date? Let's say we would like to have our text field text reset when the user types&nbsp;"ABC".</p><div
-class="source usageshadow"><div
+class="source usageshadow">
+<button
+class="copy" onclick="copy(this,'c6')">copy</button><div
 class="line" onselectstart="return false"><pre>
 1
 2
@@ -204,7 +216,7 @@ class="line" onselectstart="return false"><pre>
 14
 15
 16</pre></div><div
-class="code"><pre>
+class="code"><pre id="c6">
 <a>import</a> SwiftUI
 
 <a>struct</a> ContentView: <b>View</b> {
@@ -222,17 +234,21 @@ class="code"><pre>
   }
 }
 </pre></div></div><p>If we try to run it as it is right now, we would notice that even though we type "ABC" and it should reset, that's not what happens. This is where the <span>updateUIView</span> method comes into play. We just need to make one simple change to our custom&nbsp;view:</p><div
-class="source originshadow"><div
+class="source originshadow">
+<button
+class="copy" onclick="copy(this,'c7')">copy</button><div
 class="line" onselectstart="return false"><pre>
 1
 2
 3</pre></div><div
-class="code"><pre>
+class="code"><pre id="c7">
 <a>func</a> <s>updateUIView</s>(_ textField: <b>UITextField</b>, context: <b>Context</b>) {
   textField.<i>text</i> = text
 }
 </pre></div></div><p>We've successfully created the two way communication! If we type "AB", once the "C" is entered, the text will&nbsp;disappear.</p><p>So far so good. Next on the list, making our CustomTextField capable of become and resigning first responder. The simplest approach would be to have another binding in our custom view, like&nbsp;so:</p><div
-class="source originshadow"><div
+class="source originshadow">
+<button
+class="copy" onclick="copy(this,'c8')">copy</button><div
 class="line" onselectstart="return false"><pre>
 1
 2
@@ -260,7 +276,7 @@ class="line" onselectstart="return false"><pre>
 24
 25
 26</pre></div><div
-class="code"><pre>
+class="code"><pre id="c8">
 <a>import</a> SwiftUI
 
 <a>struct</a> CustomTextField: <b>UIViewRepresentable</b> {
@@ -287,7 +303,9 @@ class="code"><pre>
     }
   }
 }</pre></div></div><p>Now everytime the value of firstResponder changes, the keyboard will appear / disappear based on the value. Create another State variable, this time a boolean. Give it the initial value of true and pass it on to the initializer that is giving the compile&nbsp;error.</p><p>What if we wanted to use the delegate approach instead of the NotificationCenter approach? In an ideal world, we would simply make our custom type conform to UITextFieldDelegate, but doing so requires our type to also conform to NSObjectProtocol, which only classes can&nbsp;do.</p><p>This where the concept of <span>Coordinator</span> comes into&nbsp;play:</p><div
-class="source originshadow"><div
+class="source originshadow">
+<button
+class="copy" onclick="copy(this,'c9')">copy</button><div
 class="line" onselectstart="return false"><pre>
 1
 2
@@ -330,7 +348,7 @@ class="line" onselectstart="return false"><pre>
 39
 40
 41</pre></div><div
-class="code"><pre>
+class="code"><pre id="c9">
 <a>import</a> SwiftUI
 
 <a>struct</a> CustomTextField: <b>UIViewRepresentable</b> {
@@ -372,20 +390,49 @@ class="code"><pre>
     }
   }
 }
-</pre></div></div><p>The Coordinator is a class and therefore can conform to UITextFieldDelegate. It has the same binding as the parent struct. To reference that binding in the init method, the <span><u>_</u></span> prefix is used.</p><p>Is it done? It's done!</p><p>As a final note, even though some SwiftUI modifiers work with UIViewRepresentable views, like <span>.frame(...)</span>, <span>.background(...)</span>, <span>.padding(...)</span>, more internal ones such as <span>.font(...)</span>, <span>.foregroundColor</span> might not. My usual setup for UITextField is something&nbsp;like:</p><div
+</pre></div></div><p>The Coordinator is a class and therefore can conform to UITextFieldDelegate. It has the same binding as the parent struct. To assign that binding in the init method, the <span><u>_</u></span> prefix is used.<br>
+As a quick&nbsp;recap, when you have a <span>@State var foo = true</span></p><div
 class="source usageshadow"><div
 class="line" onselectstart="return false"><pre>
 1
 2
 3
-4</pre></div><div
+</pre></div><div
 class="code"><pre>
+ foo <dd>// value of type true; can use get or set on it</dd>
+$foo <dd>// a getter to a @Binding that mirrors the value of its equivalent @State, get only</dd>
+_foo <dd>// the @State itself, mutable in classes, but only mutable in init for structs</dd>
+</pre></div></div><p>Assuming we tie that <span>@State</span> to a binding <span>@Binding var foo: Bool</span></p><div
+class="source usageshadow"><div
+class="line" onselectstart="return false"><pre>
+1
+2
+3
+</pre></div><div
+class="code"><pre>
+ bar <dd>// the underlying value, which is true; can use get or set on it</dd>
+$bar <dd>// a getter to the @Binding itself; used for passing onto other parts of the code</dd>
+_bar <dd>// the @Binding itself, mutable in classes, but only mutable in init for structs</dd>
+</pre></div></div><p>Is it done? It's done &#x1F389;</p><p>As a final note, even though some SwiftUI modifiers work with UIViewRepresentable views, like <span>.frame(...)</span>, <span>.background(...)</span>, <span>.padding(...)</span>, more internal ones such as <span>.font(...)</span>, <span>.foregroundColor</span> might not. My usual setup for UITextField is something&nbsp;like:</p><div
+class="source usageshadow">
+<button
+class="copy" onclick="copy(this,'c10')">copy</button><div
+class="line" onselectstart="return false"><pre>
+1
+2
+3
+4</pre></div><div
+class="code"><pre id="c10">
   textField.<i>autocapitalizationType</i> = .<i>none</i>
   textField.<i>font</i> = .<i>systemFont</i>(ofSize: <q>20</q>)
   textField.<i>textAlignment</i> = .<i>center</i>
   textField.<i>textColor</i> = .<i>blue</i>
-</pre></div></div><p>Thank you for taking the time to read and all the best on your SwiftUI journey!<br><br><br><br></p>
+</pre></div></div>
+<br><p>Thank you for taking the time to read and all the best on your SwiftUI journey!</p>
+<br>
+<br>
+<br>
+<br>
 <footer>
 Copyright &copy; optionaldev 2021. All rights reserved.
-</footer></body></html>
-<!--Minify by http://www.MinifyWeb.com/-->
+</footer></body> <script src="scripts.js" type="text/javascript"></script> </html>
