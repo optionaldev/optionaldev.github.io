@@ -1,10 +1,20 @@
-pre
+/*!
+ * Minify by http://www.MinifyWeb.com/
+ */
+@font-face{font-family:Firacode;src:url(FiraCode-Light.ttf) format('truetype')}pre,.line,#fun{font-family:Firacode}pre
+a{color:#FC5FA3}p span
 a{color:#FC5FA3}pre
+b{color:#D0A8FF;font-weight:normal}p span
 b{color:#D0A8FF;font-weight:normal}pre
-i{color:#7FADFF;font-style:normal}pre
+i{color:#7FADFF;font-style:normal}p span
+i{color:#7FADFF;font-style:normal}p
+em{font-style:normal;border-bottom:1px dashed;border-color:#DDD4}pre
+em{font-style:normal}pre
+u{color:#FA5;text-decoration:none}p span
 u{color:#FA5;text-decoration:none}p
 u{color:#FA5;text-decoration:none}pre
 p{display:inline;padding:0;margin:0;border:0;color:#FF3217;font-weight:bold}pre
+s{color:#5DD8FF;text-decoration:none}p span
 s{color:#5DD8FF;text-decoration:none}pre
 q{color:#FC6A5D}pre q::before{display:none}pre q::after{display:none}pre q
 a{color:#DDD}pre
@@ -15,11 +25,12 @@ dd{color:#777;display:inline;margin:0}#fun{font-size:10px;padding:10px
 auto 15px auto;width:870px;overflow:hidden}.line{border-right:1px solid #FFF1;color:#777;float:left;margin-right:10px;padding-right:4px;text-align:right;width:25px}pre{margin:0}p{padding:10px
 0 10px 25px;margin:0
 auto;width:820px}p
-span{font-family:firacode;font-size:15px;background-color:#FAFAFA15;border-radius:5px;padding:5px
+span{font-family:Firacode;font-size:15px;background-color:#FAFAFA15;border-radius:5px;padding:5px
 5px 2px 4px;margin:2px
 0 2px 0}button{position:absolute;top:7px;right:10px;border:1px
 solid;border-radius:3px;color:#DDD;background:#FFF0}button:hover{color:orange !important;border:1px
-solid orange}.line
+solid orange}button:focus{color:black !important;background:orange;outline:none;outline-color:orange;border:1px
+solid orange}button:active{color:black !important;border:none;border-style:none}.line
 pre{float:right;color:#666}.code
-pre{color:#FFF;margin:0}footer{top:0}@media screen and (max-width: 1000px){header,footer{width:100%;left:0;margin-left:0}#main{width:100%}footer{width:100%}}@media screen and (max-width: 880px){p{width:90%;padding:10px
+pre{color:#FFF;margin:0}@media screen and (max-width: 1000px){header,footer{width:100%;left:0;margin-left:0}#main{width:100%}footer{width:100%}}@media screen and (max-width: 880px){p{width:90%;padding:10px
 0 10px 10px}.source{width:100%}}@media screen and (max-width: 600px){p{font-size:2.9vw;line-height:23px}h1{font-size:6.5vw;padding-top:7.2vw}.source{overflow-x:auto}}@media screen and (max-width: 480px){p{font-size:14px}}@media screen and (max-width: 380px){h2{font-size:4vw;color:red}}
