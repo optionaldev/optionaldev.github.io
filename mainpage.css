@@ -1,7 +1,7 @@
 /*!
  * Minify by http://www.MinifyWeb.com/
  */
-body{height:100vh}#main{height:90vh;text-align:center;position:relative}#blog{position:absolute;top:30%;left:40%}#blog
-a{padding:5px;border-radius:5px;border:2px
-solid transparent}#blog a:focus{outline:none;padding:5px;border:2px
-solid orange;border-radius:5px}footer{position:absolute;bottom:0}a{color:#DDD}a:hover{color:orange}
+body{height:100vh;background-color:red}#main{height:90vh;text-align:center;position:relative}#blog{position:absolute;top:30%;left:40%}#blog
+a{padding:5px;border-radius:5px;border:3px
+solid transparent}#blog a:focus{outline:none;padding:5px;border:3px
+solid var(--focus);border-radius:5px}footer{position:absolute;bottom:0}
