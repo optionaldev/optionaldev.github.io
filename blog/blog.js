@@ -1,4 +1,8 @@
 /*!
- * Minify & Encode by http://www.MinifyWeb.com/
+ * Minify by http://www.MinifyWeb.com/
  */
-eval(function(p,a,c,k,e,d){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--){d[e(c)]=k[c]||e(c)}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('4 5(1,j){9 d=3.E("5");t(9 i=0;i<d.s;i++){a(d[i])}p b=3.q();b.r(3.e(j));f.c().g();f.c().u(b);3.w("5");f.c().g();1.l="x";1.2.6=\'k\';1.2.m.6=\'k\';y(4(){a(1)},z)}4 a(1){1.A();1.2.6=\'#n\';1.2.m.6=\'#n\';1.l="5"}4 B(8){9 7=3.e(8);7.2.o(\'h\',\'#C\')}4 D(8){9 7=3.e(8);7.2.o(\'h\',\'v\')}',41,41,'|button|style|document|function|copy|color|portion|portionID|let|reset|range|getSelection|allButtons|getElementById|window|removeAllRanges|background||preID|orange|innerText|border|DDD|setProperty|var|createRange|selectNode|length|for|addRange|inherit|execCommand|copied|setTimeout|4000|blur|connect|FFF6|disconnect|getElementsByClassName'.split('|'),0,{}))
+function copy(button,preID){let allButtons=document.getElementsByClassName("copy");for(let i=0;i<allButtons.length;i++){reset(allButtons[i]);}
+var range=document.createRange();range.selectNode(document.getElementById(preID));window.getSelection().removeAllRanges();window.getSelection().addRange(range);document.execCommand("copy");window.getSelection().removeAllRanges();button.innerText="copied";button.style.color='orange';button.style.border.color='orange';setTimeout(function(){reset(button)},4000);}
+function reset(button){button.blur();button.style.color='#DDD';button.style.border.color='#DDD';button.innerText="copy";}
+function connect(portionID){let portion=document.getElementById(portionID);portion.style.setProperty('background','#FFF6');}
+function disconnect(portionID){let portion=document.getElementById(portionID);portion.style.setProperty('background','inherit');}

@@ -1,7 +1,7 @@
 /*!
  * Minify by http://www.MinifyWeb.com/
  */
-@font-face{font-family:Firacode;src:url(FiraCode-Light.ttf) format('truetype')}pre,.line,#fun{font-family:Firacode}pre
+@font-face{font-family:Firacode;src:url(FiraCode-Light.ttf) format('truetype');font-display:block}pre,.line,#fun{font-family:Firacode}pre
 a{color:#FC5FA3}p span
 a{color:#FC5FA3}pre
 b{color:#D0A8FF;font-weight:normal}p span
